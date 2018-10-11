@@ -2,6 +2,14 @@ import Vue from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 import { faHome, faStar } from '@fortawesome/free-solid-svg-icons'
+import {
+  faHome,
+  faHashtag,
+  faBookmark,
+  faCodeBranch,
+  faArrowCircleDown,
+  faArrowCircleUp
+} from '@fortawesome/free-solid-svg-icons'
 
 import {} from '@fortawesome/free-regular-svg-icons'
 
@@ -42,7 +50,12 @@ library.add(
   faGetPocket,
   faBlogger,
   faTelegram,
-  faViber
+  faViber,
+  faHashtag,
+  faBookmark,
+  faCodeBranch,
+  faArrowCircleDown,
+  faArrowCircleUp
 )
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

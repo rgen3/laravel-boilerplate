@@ -86,9 +86,9 @@ export default {
   methods: {
     getClass: function() {
       if (this.level > 0) {
-        return 'list-unstyled py-3 ml-4'
+        return 'list-unstyled ml-4'
       } else {
-        return 'list-unstyled py-3'
+        return 'list-unstyled'
       }
     }
   }
