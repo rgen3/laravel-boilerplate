@@ -201,4 +201,55 @@ return [
         'description'  => 'permissions.delete.redirections.description',
         'category'     => 'permissions.categories.seo',
     ],
+
+    'view comment' => [
+        'display_name' => 'permissions.view.comment.display_name',
+        'description'  => 'permissions.view.comment.description',
+        'category'     => 'permissions.categories.comment',
+        'children'     => ['view own comment'],
+    ],
+
+    'create comment' => [
+        'display_name' => 'permissions.create.comment.display_name',
+        'description'  => 'permissions.create.comment.description',
+        'category'     => 'permissions.categories.comment',
+    ],
+
+    'edit comment' => [
+        'display_name' => 'permissions.edit.comment.display_name',
+        'description'  => 'permissions.edit.comment.description',
+        'category'     => 'permissions.categories.comment',
+        'children'     => ['edit own comment'],
+    ],
+
+    'delete comment' => [
+        'display_name' => 'permissions.delete.comment.display_name',
+        'description'  => 'permissions.delete.comment.description',
+        'category'     => 'permissions.categories.comment',
+        'children'     => ['delete own comment'],
+    ],
+
+    'view own comment' => [
+        'display_name' => 'permissions.view.own.comment.display_name',
+        'description'  => 'permissions.view.own.comment.description',
+        'category'     => 'permissions.categories.comment',
+    ],
+
+    'edit own comment' => [
+        'display_name' => 'permissions.edit.own.comment.display_name',
+        'description'  => 'permissions.edit.own.comment.description',
+        'category'     => 'permissions.categories.comment',
+    ],
+
+    'delete own comment' => [
+        'display_name' => 'permissions.delete.own.comment.display_name',
+        'description'  => 'permissions.delete.own.comment.description',
+        'category'     => 'permissions.categories.comment',
+    ],
+
+    'publish comment' => [
+        'display_name' => 'permissions.publish.comment.display_name',
+        'description'  => 'permissions.publish.comment.description',
+        'category'     => 'permissions.categories.comment',
+    ],
 ];

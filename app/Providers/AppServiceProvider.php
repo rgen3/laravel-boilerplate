@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Repositories\Contracts\CommentRepository;
+use App\Repositories\EloquentCommentRepository;
 use Illuminate\Support\Facades\URL;
 use Laravel\Dusk\DuskServiceProvider;
 use Illuminate\Support\Facades\Schema;
@@ -108,6 +110,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             FavouriteRepository::class,
             EloquentFavouriteRepository::class
+        );
+
+        $this->app->bind(
+            CommentRepository::class,
+            EloquentCommentRepository::class
         );
     }
 }

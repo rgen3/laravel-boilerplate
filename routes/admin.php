@@ -126,6 +126,18 @@ if (config('blog.enabled')) {
     );
 }
 
+Route::group(
+    ['middleware' => ['can:create comment']],
+    function () {
+        Route::get('comment/search', 'CommentController@search')->name('comment.search');
+        Route::get('comment/{comment}/show', 'CommentController@show')->name('comment.show');
+
+        Route::resource('comment', 'CommentController', [
+            'only' => ['store', 'update', 'destroy'],
+        ]);
+    }
+);
+
 Route::get('/{vue_capture?}', 'BackendController@index')
     ->where('vue_capture', '[\/\w\.-]*')
     ->name('home');

@@ -21,6 +21,8 @@ import MetaForm from '../views/MetaForm'
 import MetaList from '../views/MetaList'
 import RedirectionForm from '../views/RedirectionForm'
 import RedirectionList from '../views/RedirectionList'
+import CommentList from '../views/CommentList'
+import CommentForm from '../views/CommentForm'
 
 Vue.use(Router)
 
@@ -90,6 +92,41 @@ export function createRouter(base, i18n) {
                 props: true,
                 meta: {
                   label: i18n.t('labels.backend.posts.titles.edit')
+                }
+              }
+            ]
+          },
+          {
+            path: 'comment',
+            component: {
+              render(c) {
+                return c('router-view')
+              }
+            },
+            children: [
+              {
+                path: '/',
+                name: 'comment',
+                component: CommentList,
+                meta: {
+                  label: i18n.t('labels.backend.comment.titles.main')
+                }
+              },
+              {
+                path: 'create',
+                name: 'comment_create',
+                component: CommentForm,
+                meta: {
+                  label: i18n.t('labels.backend.comment.titles.create')
+                }
+              },
+              {
+                path: ':id/edit',
+                name: 'comment_edit',
+                component: CommentForm,
+                props: true,
+                meta: {
+                  label: i18n.t('labels.backend.comment.titles.edit')
                 }
               }
             ]

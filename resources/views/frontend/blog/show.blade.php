@@ -44,4 +44,7 @@
         <a class="nav-link" href="{{ route('blog.tag', $tag->slug) }}">{{ $tag->name }}</a>
         @endforeach
     </nav>
+
+    <h2>Comments</h2>
+    <comment-list></comment-list>
 @endsection

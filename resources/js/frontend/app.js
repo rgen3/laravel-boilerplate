@@ -9,10 +9,16 @@ import BootstrapVue from 'bootstrap-vue/dist/bootstrap-vue.esm'
 
 import { createLocales } from '../vue-i18n-config'
 
+import CommentList from './component/comment/CommentList'
+import CommentItem from './component/comment/CommentItem'
+
 window.axios = axios
 
 // Bootstrap Vue
 Vue.use(BootstrapVue)
+
+Vue.component('comment-list', CommentList)
+Vue.component('comment-item', CommentItem)
 
 export function createApp() {
   const i18n = createLocales(window.locale)
