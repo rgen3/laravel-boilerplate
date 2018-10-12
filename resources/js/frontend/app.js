@@ -11,6 +11,7 @@ import { createLocales } from '../vue-i18n-config'
 
 import CommentList from './component/comment/CommentList'
 import CommentItem from './component/comment/CommentItem'
+import { createStore } from './store'
 
 window.axios = axios
 
@@ -22,8 +23,10 @@ Vue.component('comment-item', CommentItem)
 
 export function createApp() {
   const i18n = createLocales(window.locale)
+  const store = createStore()
 
   const app = new Vue({
+    store,
     i18n
   })
 

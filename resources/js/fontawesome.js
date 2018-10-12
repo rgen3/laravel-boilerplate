@@ -8,7 +8,16 @@ import {
   faBookmark,
   faCodeBranch,
   faArrowCircleDown,
-  faArrowCircleUp
+  faArrowCircleUp,
+  faEdit,
+  faBold,
+  faItalic,
+  faUnderline,
+  faCode,
+  faParagraph,
+  faListUl,
+  faListOl,
+  faQuoteRight
 } from '@fortawesome/free-solid-svg-icons'
 
 import {} from '@fortawesome/free-regular-svg-icons'
@@ -55,7 +64,16 @@ library.add(
   faBookmark,
   faCodeBranch,
   faArrowCircleDown,
-  faArrowCircleUp
+  faArrowCircleUp,
+  faEdit,
+  faBold,
+  faItalic,
+  faUnderline,
+  faCode,
+  faParagraph,
+  faListUl,
+  faListOl,
+  faQuoteRight
 )
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

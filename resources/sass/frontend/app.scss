@@ -35,6 +35,9 @@ body {
   position: relative;
 }
 
+[contentEditable=true] {
+  outline: none;
+}
 .jumbotron {
   margin-bottom: 0;
   direction: ltr !important;

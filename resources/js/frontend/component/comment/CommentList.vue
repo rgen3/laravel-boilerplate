@@ -7,6 +7,7 @@
       :level="level"
       :base-comment-id="baseCommentId || item.id"
       :parent-comment-id="item.id"
+      :editor-comment-id="editorCommentId"
     ></comment-item>
   </ul>
 </template>
@@ -80,7 +81,8 @@ export default {
   },
   data() {
     return {
-      items: this.children || tempItems
+      items: this.children || tempItems,
+      editorCommentId: null
     }
   },
   methods: {
