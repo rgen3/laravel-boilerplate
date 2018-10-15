@@ -12,7 +12,9 @@ export function createStore() {
   return new Vuex.Store({
     state: {
       comments: {
-        currentCommentId: null
+        editingCommentId: null,
+        currentCommentId: null,
+        currentCommentBranchId: null
       }
     },
     actions,

@@ -20,7 +20,8 @@ class CommentsTable extends Migration
             $table->integer('user_id')->nullable()->unsigned();
 
             $table->tinyInteger('status')->default(false);
-            $table->text('body');
+            $table->text('text');
+            $table->json('raw_comment');
             $table->softDeletes();
             $table->nullableTimestamps();
 

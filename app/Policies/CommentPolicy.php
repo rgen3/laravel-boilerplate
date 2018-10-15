@@ -22,11 +22,11 @@ class CommentPolicy
      */
     public function view(User $authenticatedUser, Comment $comment)
     {
-        if ($authenticatedUser->can('view posts')) {
+        if ($authenticatedUser->can('view comment')) {
             return true;
         }
 
-        if ($authenticatedUser->can('view own posts')) {
+        if ($authenticatedUser->can('view own comment')) {
             return $authenticatedUser->id === $comment->user_id;
         }
 
@@ -45,11 +45,11 @@ class CommentPolicy
      */
     public function update(User $authenticatedUser, Comment $comment)
     {
-        if ($authenticatedUser->can('edit posts')) {
+        if ($authenticatedUser->can('edit comment')) {
             return true;
         }
 
-        if ($authenticatedUser->can('edit own posts')) {
+        if ($authenticatedUser->can('edit own comment')) {
             return $authenticatedUser->id === $comment->user_id;
         }
 
@@ -68,11 +68,11 @@ class CommentPolicy
      */
     public function delete(User $authenticatedUser, Comment $comment)
     {
-        if ($authenticatedUser->can('delete posts')) {
+        if ($authenticatedUser->can('delete comment')) {
             return true;
         }
 
-        if ($authenticatedUser->can('delete own posts')) {
+        if ($authenticatedUser->can('delete own comment')) {
             return $authenticatedUser->id === $comment->user_id;
         }
 

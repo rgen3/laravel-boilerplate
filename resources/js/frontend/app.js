@@ -9,6 +9,7 @@ import BootstrapVue from 'bootstrap-vue/dist/bootstrap-vue.esm'
 
 import { createLocales } from '../vue-i18n-config'
 
+import CommentComponent from './component/comment/Comment'
 import CommentList from './component/comment/CommentList'
 import CommentItem from './component/comment/CommentItem'
 import { createStore } from './store'
@@ -18,6 +19,7 @@ window.axios = axios
 // Bootstrap Vue
 Vue.use(BootstrapVue)
 
+Vue.component('comment-component', CommentComponent)
 Vue.component('comment-list', CommentList)
 Vue.component('comment-item', CommentItem)
 

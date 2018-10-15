@@ -1,58 +1,52 @@
 <template>
-  <li class="my-3" :id="item.id">
-    <header class="mb-1">
-      <b>Rgen3</b>
-      <span class="small">
-        <time class="mx-2" datetime="2008-02-14 20:00">2008-02-14 20:00</time>
-        <font-awesome-icon
-          class="text-info mx-2"
-          :icon="['fa', 'hashtag']"
-        ></font-awesome-icon>
-        <font-awesome-icon
-          class="text-info mx-2"
-          :icon="['fa', 'bookmark']"
-        ></font-awesome-icon>
-        <font-awesome-icon
-          class="text-info mx-2 fa-flip-vertical"
-          :icon="['fa', 'code-branch']"
-        ></font-awesome-icon>
-        <font-awesome-icon
-          class="text-info mx-2"
-          :icon="['fa', 'arrow-circle-down']"
-        ></font-awesome-icon>
-        <font-awesome-icon
-          class="text-info mx-2"
-          :icon="['fa', 'arrow-circle-up']"
-        ></font-awesome-icon>
-        <font-awesome-icon
-          class="text-info mx-2"
-          :icon="['fa', 'edit']"
-        ></font-awesome-icon>
-      </span>
-    </header>
+  <li
+    class="my-3"
+    :id="'comment-' + item.id"
+  >
+    <CommentHeader
+      :comment-id="item.id"
+      :parent-comment-id="item.parentCommentId"
+      :comment-time="item.commentTime"
+      :is-favourite="item.isFavourite"
+      :can-edit="item.canEdit"
+    ></CommentHeader>
     <section>
-      {{ item.text }} - currentCommentId:  {{ currentCommentId }}; item.id: {{ item.id }} |
+      <Editor
+        v-if="isEditMode"
+        :text="item.text"
+        :json="item.json"
+        @input="updateCommentObject"
+        @save="saveEditedComment"
+        @cancel="cancelEditMode()"
+      ></Editor>
+      <div v-else v-html="comment"></div>
     </section>
     <footer class="mt-1">
       <div class="bg-light" v-if="currentCommentId === item.id">
-        <Editor></Editor>
+        <Editor
+          @input="updatenewCommentObject"
+          @save="saveNewComment"
+          @cancel="cancelAnswer()"
+        ></Editor>
       </div>
-      <a v-else @click.prevent="setAnswerToComment(item.id)" href="#" class="nav-link-info my-2">answer</a>
+      <a v-else @click.prevent="setAnswerToComment(item.id)" href="#" class="nav-link-info my-2">reply</a>
     </footer>
     <comment-list
-      v-if="item.children"
-      :children="item.children"
+      v-if="children"
+      :children="children"
       :level="level + 1"
       :base-comment-id="baseCommentId"
+      :model-id="modelId"
     ></comment-list>
   </li>
 </template>
 <script>
 import Editor from './Editor'
+import CommentHeader from './CommentItemHeader'
 
 export default {
   name: 'CommentItem',
-  components: { Editor },
+  components: { Editor, CommentHeader },
   props: {
     item: {
       type: Object,
@@ -69,14 +63,24 @@ export default {
     parentCommentId: {
       type: Number,
       required: true
+    },
+    modelId: {
+      type: Number,
+      required: true
     }
   },
   data() {
     return {
-      comment: ''
+      comment: this.item.text,
+      children: this.item.children,
+      newCommentObject: null,
+      editCommentObject: null
     }
   },
   computed: {
+    isEditMode: function() {
+      return this.$store.state.comments.editingCommentId === this.item.id
+    },
     currentCommentId: function() {
       return this.$store.state.comments.currentCommentId
     }
@@ -85,6 +89,56 @@ export default {
     setAnswerToComment: function(commentId) {
       this.$store.dispatch('SET_CURRENT_COMMENT_ID', commentId)
       return false
+    },
+    cancelAnswer: function() {
+      this.$store.dispatch('SET_CURRENT_COMMENT_ID', null)
+    },
+    cancelEditMode: function() {
+      this.newCommentObject = null
+      this.editCommentObject = null
+      this.$store.dispatch('EDIT_COMMENT', null)
+    },
+    updateCommentObject: function(data) {
+      this.editCommentObject = data
+    },
+    updatenewCommentObject: function(data) {
+      this.newCommentObject = data
+    },
+    saveEditedComment: function() {
+      if (!this.editCommentObject) {
+        this.cancelEditMode()
+        return
+      }
+
+      const commentData = {
+        id: this.item.id,
+        data: this.editCommentObject
+      }
+
+      this.$store.dispatch('UPDATE_COMMENT', commentData).then(response => {
+        this.comment = response.data.comment.text
+        this.$store.dispatch('EDIT_COMMENT', null)
+      })
+    },
+    saveNewComment: function() {
+      if (!this.newCommentObject) {
+        this.cancelEditMode()
+        return
+      }
+
+      const commentData = {
+        modelId: this.modelId,
+        parentId: this.item.id,
+        html: this.newCommentObject.html,
+        json: this.newCommentObject.json
+      }
+
+      this.$store.dispatch('CREATE_COMMENT', commentData).then(response => {
+        this.cancelEditMode()
+        const { comment } = response.data
+        comment.children = []
+        this.children.push(comment)
+      })
     }
   }
 }

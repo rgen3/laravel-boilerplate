@@ -8,64 +8,19 @@
       :base-comment-id="baseCommentId || item.id"
       :parent-comment-id="item.id"
       :editor-comment-id="editorCommentId"
+      :can-edit="item.canEdit"
+      :model-id="modelId"
     ></comment-item>
   </ul>
 </template>
 <script>
-const tempItems = [
-  {
-    id: 112333,
-    text: 'this is the text',
-    children: [
-      {
-        id: 22322,
-        text: 'this is the children',
-        children: [
-          {
-            id: 111234,
-            text: 'this is the text'
-          },
-          {
-            id: 11234487,
-            text: 'this is the text'
-          }
-        ]
-      },
-      {
-        id: 22312,
-        text: 'this is the children',
-        children: [
-          {
-            id: 12312334,
-            text: 'this is the text'
-          },
-          {
-            id: 112123487,
-            text: 'this is the text'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: 245232,
-    text: 'this is the children',
-    children: [
-      {
-        id: 11342234,
-        text: 'this is the text'
-      },
-      {
-        id: 1123426487,
-        text: 'this is the text'
-      }
-    ]
-  }
-]
-
 export default {
   name: 'CommentList',
   props: {
+    initialItems: {
+      type: Array,
+      default: () => []
+    },
     children: {
       type: Array,
       default: null
@@ -77,11 +32,15 @@ export default {
     baseCommentId: {
       type: Number,
       default: undefined
+    },
+    modelId: {
+      type: Number,
+      required: true
     }
   },
   data() {
     return {
-      items: this.children || tempItems,
+      items: this.children || this.initialItems,
       editorCommentId: null
     }
   },

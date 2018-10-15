@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Http\Presenters\CommentsPresenter;
 use App\Models\Tag;
 use App\Models\Post;
 use App\Models\User;
 use App\Facades\SEOMeta;
+use App\Repositories\Contracts\CommentRepository;
+use App\Repositories\EloquentCommentRepository;
+use Barryvdh\LaravelIdeHelper\Eloquent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Repositories\Contracts\PostRepository;
@@ -17,16 +21,19 @@ class BlogController extends FrontendController
      */
     protected $posts;
 
+    /** @var EloquentCommentRepository */
+    private $commentRepository;
+
     /**
-     * Create a new controller instance.
-     *
-     * @param \App\Repositories\Contracts\PostRepository $posts
+     * @param PostRepository $posts
+     * @param CommentRepository $commentRepository
      */
-    public function __construct(PostRepository $posts)
+    public function __construct(PostRepository $posts, CommentRepository $commentRepository)
     {
         parent::__construct();
 
         $this->posts = $posts;
+        $this->commentRepository = $commentRepository;
     }
 
     public function index()
@@ -66,6 +73,11 @@ class BlogController extends FrontendController
 
         $this->setTranslatable($post);
 
-        return view('frontend.blog.show')->withPost($post);
+        $comments = $this->commentRepository->getAllModelComments(Post::class, $post->id);
+        $commentsTree = (new CommentsPresenter($comments, auth()->guest() ? -1 : auth()->id()));
+
+        return view('frontend.blog.show')
+            ->withComments($commentsTree->toTree())
+            ->withPost($post);
     }
 }

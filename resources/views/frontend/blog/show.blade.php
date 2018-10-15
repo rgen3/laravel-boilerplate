@@ -46,5 +46,8 @@
     </nav>
 
     <h2>Comments</h2>
-    <comment-list></comment-list>
+    <comment-component
+        :initial-comments="{{ json_encode($comments)  }}"
+        :model-id="{{ json_encode($post->id) }}"
+    ></comment-component>
 @endsection

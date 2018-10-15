@@ -20,7 +20,7 @@ class Comment extends Model
     public const STATUS_PUBLISHED = 3;
 
     public $editorFields = [
-        'body',
+        'text',
     ];
 
     protected $appends = [
@@ -31,11 +31,13 @@ class Comment extends Model
 
     protected $casts = [
         'status' => 'integer',
+        'raw_comment' => 'json',
     ];
 
     protected $fillable = [
         'status',
-        'body',
+        'text',
+        'raw_comment'
     ];
 
     public $with = [

@@ -1,6 +1,6 @@
 <template>
   <div class="mx-4 py-3">
-    <editor class="editor" :extensions="extensions">
+    <editor class="editor" :extensions="extensions" @update="onUpdate" ref="editor">
 
       <div class="menubar mb-2" slot="menubar" slot-scope="{ nodes, marks }">
         <div v-if="nodes && marks">
@@ -139,30 +139,13 @@
         </div>
       </div>
 
-      <div class="px-3 py-2 bg-white" slot="content" slot-scope="props">
-        <h2>
-          Hi there,
-        </h2>
-        <p>
-          this is a very <em>basic</em> example of tiptap.
-        </p>
-        <pre><code>body { display: none; }</code></pre>
-        <ul>
-          <li>
-            A regular list
-          </li>
-          <li>
-            With regular items
-          </li>
-        </ul>
-        <blockquote>
-          It's amazing 👏
-          <br>
-          – mom
-        </blockquote>
-      </div>
+      <div class="px-3 py-2 bg-white" slot="content" slot-scope="props" v-html="text"></div>
 
     </editor>
+    <!--<b-button class="btn-outline mt-2" @click="$emit('preview')">Preview</b-button>-->
+    <b-button class="btn-outline-info mt-2" @click="$emit('save')">Save</b-button>
+    <b-button class="btn-outline mt-2 float-right" v-if="showCancelBtn" @click="$emit('cancel')">Cancel</b-button>
+    <div class="clearfix"></div>
   </div>
 </template>
 <script>
@@ -188,8 +171,26 @@ import {
 
 export default {
   components: { Editor },
+  props: {
+    text: {
+      type: String,
+      default: ''
+    },
+    json: {
+      type: Object,
+      default: () => {}
+    },
+    showCancelBtn: {
+      type: Boolean,
+      default: true
+    }
+  },
   data() {
     return {
+      editorContent: {
+        json: this.json,
+        html: this.text
+      },
       extensions: [
         new BlockquoteNode(),
         new BulletListNode(),
@@ -208,6 +209,13 @@ export default {
         new UnderlineMark(),
         new HistoryExtension()
       ]
+    }
+  },
+  methods: {
+    onUpdate({ getJSON, getHTML }) {
+      this.editorContent.json = getJSON()
+      this.editorContent.html = getHTML()
+      this.$emit('input', this.editorContent)
     }
   }
 }
