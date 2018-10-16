@@ -16,6 +16,11 @@
     @include('partials.alternates')
     @endif
 
+    <script>
+        window.app = {}
+        window.app.user = {{ json_encode(auth()->user()) }}
+    </script>
+
     <!-- Styles -->
     @if ($stylePath = Html::asset('frontend', 'frontend.css'))
     <link rel="stylesheet" href="{{ $stylePath }}">

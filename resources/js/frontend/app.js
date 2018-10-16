@@ -27,6 +27,8 @@ export function createApp() {
   const i18n = createLocales(window.locale)
   const store = createStore()
 
+  Vue.prototype.$app = window.app
+
   const app = new Vue({
     store,
     i18n

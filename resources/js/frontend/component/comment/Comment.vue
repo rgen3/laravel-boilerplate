@@ -7,11 +7,13 @@
     <h3>Write a comment</h3>
     <div class="bg-light">
       <Editor
+        v-if="$app.user"
         @input="updateComment"
         @save="saveNewComment"
         :show-cancel-btn="false"
         :text="text"
       ></Editor>
+      <b-alert v-else show variant="info">Please, login to write a comment</b-alert>
     </div>
   </div>
 </template>
