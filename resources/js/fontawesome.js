@@ -3,7 +3,6 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 
 import { faHome, faStar } from '@fortawesome/free-solid-svg-icons'
 import {
-  faHome,
   faHashtag,
   faBookmark,
   faCodeBranch,

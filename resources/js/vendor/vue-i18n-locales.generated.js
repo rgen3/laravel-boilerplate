@@ -1040,6 +1040,7 @@ export default {
                 "settings": "Settings",
                 "account": "My account",
                 "profile": "My profile",
+                "favourite": "My favourite",
                 "avatar": "Avatar",
                 "online": "Online",
                 "edit_profile": "Edit my profile",
@@ -1204,7 +1205,10 @@ export default {
                     "blog": "Blog",
                     "message_sent": "Message sent",
                     "legal_mentions": "Legal mentions",
-                    "administration": "Administration"
+                    "administration": "Administration",
+                    "favourite": {
+                        "posts": "Your favourite posts"
+                    }
                 },
                 "submissions": {
                     "message_sent": "<p>Your message has been successfully sent<\/p>"
@@ -3403,6 +3407,7 @@ export default {
                 "settings": "Настройки",
                 "account": "Мой аккаунт",
                 "profile": "Мой профиль",
+                "favourite": "Избранное",
                 "avatar": "Аватар",
                 "online": "В&nbsp;сети",
                 "edit_profile": "Изменить мой профиль",
@@ -3567,7 +3572,10 @@ export default {
                     "blog": "Блог",
                     "message_sent": "Сообщение отправлено",
                     "legal_mentions": "Юридическая информация",
-                    "administration": "Администрирование"
+                    "administration": "Администрирование",
+                    "favourite": {
+                        "posts": "Избранные публикации"
+                    }
                 },
                 "submissions": {
                     "message_sent": "<p>Ваше сообщение успешно отправлено.<\/p>"
