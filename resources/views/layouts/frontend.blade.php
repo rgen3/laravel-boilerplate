@@ -18,7 +18,7 @@
 
     <script>
         window.app = {}
-        window.app.user = {{ json_encode(auth()->user()) }}
+        window.app.user = {!! json_encode(auth()->user()) !!}
     </script>
 
     <!-- Styles -->

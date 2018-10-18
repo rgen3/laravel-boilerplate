@@ -1,36 +1,40 @@
 <template>
   <li
-    class="my-3"
+    class="my-3 item-wrapper"
     :id="'comment-' + item.id"
   >
-    <CommentHeader
-      :comment-id="item.id"
-      :parent-comment-id="item.parentCommentId"
-      :comment-time="item.commentTime"
-      :is-favourite="item.isFavourite"
-      :can-edit="item.canEdit"
-    ></CommentHeader>
-    <section>
-      <Editor
-        v-if="isEditMode"
-        :text="item.text"
-        :json="item.json"
-        @input="updateCommentObject"
-        @save="saveEditedComment"
-        @cancel="cancelEditMode()"
-      ></Editor>
-      <div v-else v-html="comment"></div>
-    </section>
-    <footer class="mt-1">
-      <div class="bg-light" v-if="currentCommentId === item.id">
+    <div
+      :class="getItemClass()"
+    >
+      <CommentHeader
+        :comment-id="item.id"
+        :parent-comment-id="item.parentCommentId"
+        :comment-time="item.commentTime"
+        :is-favourite="item.isFavourite"
+        :can-edit="item.canEdit"
+      ></CommentHeader>
+      <section>
         <Editor
-          @input="updatenewCommentObject"
-          @save="saveNewComment"
-          @cancel="cancelAnswer()"
+          v-if="isEditMode"
+          :text="item.text"
+          :json="item.json"
+          @input="updateCommentObject"
+          @save="saveEditedComment"
+          @cancel="cancelEditMode()"
         ></Editor>
-      </div>
-      <a v-else @click.prevent="setAnswerToComment(item.id)" href="#" class="nav-link-info my-2">reply</a>
-    </footer>
+        <div v-else v-html="comment"></div>
+      </section>
+      <footer class="mt-1">
+        <div class="bg-light" v-if="currentCommentId === item.id">
+          <Editor
+            @input="updatenewCommentObject"
+            @save="saveNewComment"
+            @cancel="cancelAnswer()"
+          ></Editor>
+        </div>
+        <a v-else @click.prevent="setAnswerToComment(item.id)" href="#" class="nav-link-info my-2">reply</a>
+      </footer>
+    </div>
     <comment-list
       v-if="children"
       :children="children"
@@ -86,6 +90,9 @@ export default {
     }
   },
   methods: {
+    getItemClass: function() {
+      return this.item.itemClass ? `ml-4 ${this.item.itemClass}` : 'ml-1'
+    },
     setAnswerToComment: function(commentId) {
       this.$store.dispatch('SET_CURRENT_COMMENT_ID', commentId)
       return false
@@ -134,10 +141,14 @@ export default {
       }
 
       this.$store.dispatch('CREATE_COMMENT', commentData).then(response => {
-        this.cancelEditMode()
-        const { comment } = response.data
+        const comment = {
+          itemClass: 'new-item',
+          ...response.data.comment
+        }
         comment.children = []
+
         this.children.push(comment)
+        this.cancelAnswer()
       })
     }
   }

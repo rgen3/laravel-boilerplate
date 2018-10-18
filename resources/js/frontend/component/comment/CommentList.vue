@@ -47,9 +47,9 @@ export default {
   methods: {
     getClass: function() {
       if (this.level > 0) {
-        return 'list-unstyled ml-4'
+        return 'list-unstyled ml-3 list-wrapper'
       } else {
-        return 'list-unstyled'
+        return 'list-unstyled list-wrapper'
       }
     }
   }

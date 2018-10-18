@@ -1,0 +1,17 @@
+.comment-wrapper {
+  .new-item {
+    animation: colorchange 1500ms;
+    -webkit-animation: colorchange 1500ms;
+  }
+  @keyframes colorchange
+  {
+    0%   {background: $yellow;}
+    100% {background: $white;}
+  }
+
+  @-webkit-keyframes colorchange /* Safari and Chrome - necessary duplicate */
+  {
+    0%   {background: $yellow;}
+    100% {background: $white;}
+  }
+}

@@ -216,6 +216,9 @@ export default {
       this.editorContent.json = getJSON()
       this.editorContent.html = getHTML()
       this.$emit('input', this.editorContent)
+    },
+    clearContent: function() {
+      this.$refs.editor.clearContent()
     }
   }
 }

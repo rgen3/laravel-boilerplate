@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="comment-wrapper">
     <comment-list
       :initial-items="commentList"
       :model-id="modelId"
@@ -8,6 +8,7 @@
     <div class="bg-light">
       <Editor
         v-if="$app.user"
+        ref="editor"
         @input="updateComment"
         @save="saveNewComment"
         :show-cancel-btn="false"
@@ -56,9 +57,11 @@ export default {
       }
 
       this.$store.dispatch('CREATE_COMMENT', commentData).then(response => {
-        this.commentList.push(response.data.comment)
+        const comment = { itemClass: 'new-item', ...response.data.comment }
+        this.commentList.push(comment)
         this.newCommentObject = null
         this.text = ''
+        this.$refs.editor.clearContent()
       })
     }
   }
