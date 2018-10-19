@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Favourite;
 use App\Http\Requests\Favourite\ToggleRequest;
@@ -40,6 +41,19 @@ class FavouriteController extends FrontendController
         ];
     }
 
+    public function comment(ToggleRequest $request) {
+        $this->favourite->toggleFavourite(
+            $request->getChecked(),
+            Comment::class,
+            $request->getId(),
+            auth()->id()
+        );
+
+        return [
+            'success' => true,
+        ];
+    }
+
     /**
      * @param string $type
      *
@@ -51,7 +65,7 @@ class FavouriteController extends FrontendController
             abort(403);
         }
 
-        if (! in_array($type, Favourite::EXISTING_TYPES)) {
+        if (! array_key_exists($type, Favourite::EXISTING_TYPES)) {
             abort(404);
         }
 

@@ -1,16 +1,5 @@
-<template>
-  <b-btn @click="toggleFavourite" :title="getTitle">
-    <font-awesome-icon
-      :icon="icon"
-      :color="getIconColor()"
-    ></font-awesome-icon>
-  </b-btn>
-</template>
-<script>
-import { axios } from '../../axios-config'
-
+import { axios } from '../../../axios-config'
 export default {
-  name: 'AddToFavourite',
   props: {
     itemId: {
       type: Number,
@@ -27,6 +16,14 @@ export default {
     url: {
       type: String,
       default: '/favourite/post'
+    },
+    checkedColor: {
+      type: String,
+      default: 'gold'
+    },
+    uncheckedColor: {
+      type: String,
+      default: 'white'
     }
   },
   data: function() {
@@ -64,8 +61,7 @@ export default {
         })
     },
     getIconColor: function() {
-      return this.getIsChecked ? 'gold' : 'white'
+      return this.getIsChecked ? this.checkedColor : this.uncheckedColor
     }
   }
 }
-</script>

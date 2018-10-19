@@ -33,5 +33,10 @@ if (config('blog.enabled')) {
     )->name('blog.owner');
 }
 
-Route::get('my/favourite/{type}', 'FavouriteController@user')->name('user.favourite');
+Route::get(
+    'my/favourite/{type}',
+    'FavouriteController@user'
+)->name('user.favourite');
+
 Route::post('favourite/post', 'FavouriteController@post')->name('favourite.add.post');
+Route::post('favourite/comment', 'FavouriteController@comment')->name('favourite.add.post');

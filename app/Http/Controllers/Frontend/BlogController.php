@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Presenters\CommentsPresenter;
+use App\Models\Comment;
 use App\Models\Tag;
 use App\Models\Post;
 use App\Models\User;
 use App\Facades\SEOMeta;
 use App\Repositories\Contracts\CommentRepository;
+use App\Repositories\Contracts\FavouriteRepository;
 use App\Repositories\EloquentCommentRepository;
-use Barryvdh\LaravelIdeHelper\Eloquent;
+use App\Repositories\EloquentFavouriteRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Repositories\Contracts\PostRepository;
@@ -24,16 +26,21 @@ class BlogController extends FrontendController
     /** @var EloquentCommentRepository */
     private $commentRepository;
 
+    /** @var EloquentFavouriteRepository */
+    private $favouriteRepository;
+
     /**
      * @param PostRepository $posts
+     * @param FavouriteRepository $favouriteRepository
      * @param CommentRepository $commentRepository
      */
-    public function __construct(PostRepository $posts, CommentRepository $commentRepository)
+    public function __construct(PostRepository $posts, FavouriteRepository $favouriteRepository, CommentRepository $commentRepository)
     {
         parent::__construct();
 
         $this->posts = $posts;
         $this->commentRepository = $commentRepository;
+        $this->favouriteRepository = $favouriteRepository;
     }
 
     public function index()
@@ -74,7 +81,18 @@ class BlogController extends FrontendController
         $this->setTranslatable($post);
 
         $comments = $this->commentRepository->getAllModelComments(Post::class, $post->id);
-        $commentsTree = (new CommentsPresenter($comments, auth()->guest() ? -1 : auth()->id()));
+
+        $userId = auth()->id();
+        $favouriteCommentsIds = [];
+        if ($userId) {
+            $favouriteCommentsIds = $this->favouriteRepository->getIsUserFavouriteByIds(
+                $userId,
+                Comment::class,
+                $comments->pluck('id')->toArray()
+             );
+        }
+
+        $commentsTree = (new CommentsPresenter($comments, $favouriteCommentsIds, $userId));
 
         return view('frontend.blog.show')
             ->withComments($commentsTree->toTree())

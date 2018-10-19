@@ -10,16 +10,21 @@ class CommentsPresenter
     /** @var Collection */
     private $comments;
 
-    /** @var int */
+    /** @var ?int */
     private $currentUserId;
+
+    /** @var array */
+    private $favouriteComments;
 
     /**
      * @param Collection $comments
-     * @param int $currentUserId
+     * @param array $favouriteComments
+     * @param int|null $currentUserId
      */
-    public function __construct(Collection $comments, int $currentUserId)
+    public function __construct(Collection $comments, array $favouriteComments, ?int $currentUserId)
     {
         $this->comments = $comments;
+        $this->favouriteComments = $favouriteComments;
         $this->currentUserId = $currentUserId;
     }
 
@@ -29,7 +34,7 @@ class CommentsPresenter
     public function toArray(): array
     {
         return $this->comments->map(function ($item) {
-            return (new OneCommentPresenter($item, $this->currentUserId))->toArray();
+            return (new OneCommentPresenter($item, $this->favouriteComments, $this->currentUserId))->toArray();
         })->toArray();
     }
 

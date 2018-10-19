@@ -7,7 +7,7 @@ import swal from 'sweetalert2'
 import WebFont from 'webfontloader'
 import Turbolinks from 'turbolinks'
 
-import vAddToFavourite from './components/Favourite'
+import vAddToFavourite from './components/favourite/Favourite'
 import vSocialShare from './components/social-share/SocialShareIcon'
 
 /**

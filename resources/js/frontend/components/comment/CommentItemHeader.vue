@@ -16,10 +16,12 @@
           :icon="['fa', 'hashtag']"
         ></font-awesome-icon>
       </a>
-      <font-awesome-icon
-        :class="getFavouriteIconClass()"
-        :icon="['fa', 'bookmark']"
-      ></font-awesome-icon>
+      <FavouriteIcon
+        :checked="isFavourite"
+        unchecked-color="#17a2b8"
+        url="/favourite/comment"
+        :item-id="commentId"
+      ></FavouriteIcon>
       <a
         v-if="canEdit"
         href="#"
@@ -35,8 +37,10 @@
   </header>
 </template>
 <script>
+import FavouriteIcon from '../favourite/FavouriteComment'
 export default {
   name: 'CommentItemHeader',
+  components: { FavouriteIcon },
   props: {
     commentTime: {
       type: String,
@@ -80,9 +84,6 @@ export default {
       }
 
       return false
-    },
-    getFavouriteIconClass: function() {
-      return `${this.isFavourite ? 'text-danger' : 'text-info'} mx-2`
     },
     editComment: function() {
       this.$store.dispatch('EDIT_COMMENT', this.commentId)

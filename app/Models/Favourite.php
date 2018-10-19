@@ -16,10 +16,12 @@ class Favourite extends Model
 {
     /** @var string */
     public const TYPE_POSTS = 'posts';
+    public const TYPE_COMMENTS = 'comments';
 
     /** @var array */
     public const EXISTING_TYPES = [
         self::TYPE_POSTS => Post::class,
+        self::TYPE_COMMENTS => Comment::class,
     ];
 
     /** @var null */

@@ -3,10 +3,11 @@
 namespace App\Repositories;
 
 use App\Models\Favourite;
+use App\Repositories\Contracts\FavouriteRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
-class EloquentFavouriteRepository extends EloquentBaseRepository
+class EloquentFavouriteRepository extends EloquentBaseRepository implements FavouriteRepository
 {
     /** @var Favourite */
     protected $model;
@@ -84,9 +85,29 @@ class EloquentFavouriteRepository extends EloquentBaseRepository
         return $model::with(['favourite'])
             ->join('favourites', 'favourites.model_id', 'id', 'inner')
             ->where([
-                'model_type'         => $model,
+                'favourites.model_type'         => $model,
                 'favourites.user_id' => $userId,
             ])
             ->orderBy('favourites.created_at', 'desc');
+    }
+
+    /**
+     * @param int $userId
+     * @param string $modelType
+     * @param array $modelIds
+     * @return array
+     */
+    public function getIsUserFavouriteByIds(int $userId, string $modelType, array $modelIds): array
+    {
+        return $this->model->query()
+            ->select(['model_id'])
+            ->where([
+                'model_type' => $modelType,
+                'user_id' => $userId
+            ])
+            ->whereIn('model_id', $modelIds)
+            ->get()
+            ->pluck('model_id', 'model_id')
+            ->toArray();
     }
 }

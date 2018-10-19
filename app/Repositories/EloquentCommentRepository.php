@@ -76,7 +76,8 @@ class EloquentCommentRepository extends EloquentBaseRepository implements Commen
     public function destroy()
     {}
 
-    public function getAllModelComments(string $type, int $id) {
+    public function getAllModelComments(string $type, int $id)
+    {
         return $this->model->query()
             ->where(['model_type' => $type, 'model_id' => $id])
             ->orderBy('created_at', 'asc')

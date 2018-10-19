@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Models;
 
+use App\Models\Traits\Favouritable;
 use App\Models\Traits\HasEditor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Gate;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Comment extends Model
 {
     use HasEditor;
+    use Favouritable;
     use SoftDeletes;
 
     public const STATUS_NEW = 0;

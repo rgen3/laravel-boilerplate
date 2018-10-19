@@ -9,9 +9,9 @@ import BootstrapVue from 'bootstrap-vue/dist/bootstrap-vue.esm'
 
 import { createLocales } from '../vue-i18n-config'
 
-import CommentComponent from './component/comment/Comment'
-import CommentList from './component/comment/CommentList'
-import CommentItem from './component/comment/CommentItem'
+import CommentComponent from './components/comment/Comment'
+import CommentList from './components/comment/CommentList'
+import CommentItem from './components/comment/CommentItem'
 import { createStore } from './store'
 
 window.axios = axios

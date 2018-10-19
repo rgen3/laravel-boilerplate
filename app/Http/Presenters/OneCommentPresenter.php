@@ -11,12 +11,21 @@ class OneCommentPresenter
     /** @var Comment */
     private $comment;
 
+    /** @var array */
+    private $favouriteComments;
+
     /** @var int */
     private $currentUserId;
 
-    public function __construct(Comment $comment, int $currentUserId)
+    /**
+     * @param Comment $comment
+     * @param array $favouriteComments
+     * @param int|null $currentUserId
+     */
+    public function __construct(Comment $comment, array $favouriteComments, ?int $currentUserId)
     {
         $this->comment = $comment;
+        $this->favouriteComments = $favouriteComments;
         $this->currentUserId = $currentUserId;
     }
 
@@ -27,8 +36,8 @@ class OneCommentPresenter
             'parentId' => $this->comment->parent_id,
             'text' => $this->comment->text,
             'json' => $this->comment->raw_comment,
-            'isFavourite' => false,
-            'canEdit' => $this->currentUserId === $this->comment->user_id,
+            'isFavourite' => array_key_exists($this->comment->id, $this->favouriteComments),
+            'canEdit' => $this->currentUserId && $this->currentUserId === $this->comment->user_id,
             'commentTime' => Carbon::parse($this->comment->created_at)->toDateTimeString(),
             'updateTime' => Carbon::parse($this->comment->updated_at)->toDateTimeString()
         ];
