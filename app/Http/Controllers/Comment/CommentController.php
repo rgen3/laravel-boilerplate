@@ -29,8 +29,9 @@ class CommentController extends Controller
     public function update(UpdateRequest $request)
     {
         $comment = $this->commentRepository->updateUserComment($request->getId(), $request->getHtml(), $request->getJson());
+
         return  [
-            'comment' => (new OneCommentPresenter($comment, auth()->id()))->toArray(),
+            'comment' => (new OneCommentPresenter($comment, [], auth()->id()))->toArray(),
         ];
     }
 
@@ -53,7 +54,7 @@ class CommentController extends Controller
         );
 
         return [
-            'comment' => (new OneCommentPresenter($comment, auth()->id()))->toArray(),
+            'comment' => (new OneCommentPresenter($comment, [], auth()->id()))->toArray(),
         ];
     }
 }
