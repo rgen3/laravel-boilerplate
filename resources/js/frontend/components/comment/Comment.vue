@@ -3,6 +3,7 @@
     <comment-list
       :initial-items="commentList"
       :model-id="modelId"
+      :is-flat-list="isFlatList"
     ></comment-list>
     <h3>Write a comment</h3>
     <div class="bg-light">
@@ -32,6 +33,10 @@ export default {
     initialComments: {
       type: Array,
       default: () => []
+    },
+    isFlatList: {
+      type: Boolean,
+      default: false
     }
   },
   data: function() {

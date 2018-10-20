@@ -41,6 +41,7 @@
       :level="level + 1"
       :base-comment-id="baseCommentId"
       :model-id="modelId"
+      :is-flat-list="isFlatList"
     ></comment-list>
   </li>
 </template>
@@ -70,6 +71,10 @@ export default {
     },
     modelId: {
       type: Number,
+      required: true
+    },
+    isFlatList: {
+      type: Boolean,
       required: true
     }
   },

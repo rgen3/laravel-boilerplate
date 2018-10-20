@@ -10,6 +10,7 @@
       :editor-comment-id="editorCommentId"
       :can-edit="item.canEdit"
       :model-id="modelId"
+      :is-flat-list="isFlatList"
     ></comment-item>
   </ul>
 </template>
@@ -36,6 +37,10 @@ export default {
     modelId: {
       type: Number,
       required: true
+    },
+    isFlatList: {
+      type: Boolean,
+      required: true
     }
   },
   data() {
@@ -46,7 +51,7 @@ export default {
   },
   methods: {
     getClass: function() {
-      if (this.level > 0) {
+      if (!this.isFlatList && this.level > 0) {
         return 'list-unstyled ml-3 list-wrapper'
       } else {
         return 'list-unstyled list-wrapper'
